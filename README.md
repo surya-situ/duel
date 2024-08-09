@@ -20,7 +20,7 @@ npm install
 
 - To run the server 
 ```sh
-npm run server
+npm run dev
 ```
 - For frontend 
 ```sh

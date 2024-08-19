@@ -8,8 +8,10 @@
     "start": "node ./dist/server.js",
     "server": "nodemon ./dist/server.js",
     "watch": "tsc -w",
-    "build": "tsc",
-    "dev": "concurrently \"npm run watch\" \"npm run server\""
+    "build": "tsc && npm run copy-files",
+    "dev": "concurrently \"npm run watch\" \"npm run server\" \"npm run watch-views\" ",
+    "copy-files": "copyfiles -u 1 \"src/views/**/*\" dist/ ",
+    "watch-views": "nodemon --watch src/views -e ejs -x \"npm run copy-files\" "
   },
   "repository": {
     "type": "git",
@@ -34,10 +36,16 @@
   "homepage": "https://github.com/surya-situ/duel#readme",
   "dependencies": {
     "@prisma/client": "^5.18.0",
+    "@types/ejs": "^3.1.5",
+    "@types/nodemailer": "^6.4.15",
+    "bullmq": "^5.12.9",
     "concurrently": "^8.2.2",
+    "copyfiles": "^2.4.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "nodemailer": "^6.9.14",
     "prisma": "^5.18.0"
   },
   "devDependencies": {

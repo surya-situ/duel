@@ -1,0 +1,93 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head.ejs') %>
+<body>
+    <div class="container">
+        <p>Hello <strong> <%= name %> </strong></p>
+        <p>We are happy to see you.</p>
+        <%- include('../partials/footer.ejs') %>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa; 
+            color: #333;
+        }
+
+        header {
+            background-color: #0288d1; 
+            color: #fff;
+            padding: 10px 0;
+            text-align: center; /* Center align header text */
+            max-width: 400px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem; /* Slightly smaller font size */
+        }
+
+        .container {
+            max-width: 400px; /* Set a max width for the container */
+            margin: 20px auto; /* Center container horizontally */
+            padding: 20px;
+            background-color: #ffffff; /* White background for content */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        .container p {
+            font-size: 0.8rem; /* Smaller font size */
+            margin: 10px 0;
+            text-align: left; /* Align text to the right */
+        }
+
+        .container .greeting {
+            font-size: 1rem; /* Smaller font size for greeting */
+            font-weight: bold;
+        }
+
+        footer {
+            max-width: 400px;
+            background-color: #0288d1; /* Same dark blue as header */
+            color: #fff;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center; /* Center align footer text */
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.8rem; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Duel</h1>
+    </header>
+
+    <div class="container">
+        <p class="greeting">Hello <strong><%= name %></strong>,</p>
+        <p>We are thrilled to have you with us. Welcome to Duel, where we strive to bring you the best.</p>
+        <p>Feel free to explore and reach out if you need any assistance.</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Duel. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify email</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa; 
+            color: #333;
+        }
+
+        header {
+            max-width: 600px;
+            background-color: #0288d1; 
+            color: #fff;
+            padding: 10px 0;
+            text-align: center; 
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem; 
+        }
+
+        .container {
+            max-width: 450px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container p {
+            font-size: 0.8rem; 
+            margin: 10px 0;
+            text-align: left; 
+        }
+
+        .container a {
+            background-color: #0288d1; 
+            color: #fff;
+            padding: 10px 20px 10px 20px;
+            margin: 10px;
+            font-size: 1.5rem;
+        }
+
+        .container .greeting {
+            font-size: 1rem; 
+            font-weight: bold;
+        }
+
+        footer {
+            max-width: 600px;
+            background-color: #0288d1; 
+            color: #fff;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.8rem; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Duel</h1>
+    </header>
+
+    <div class="container">
+        <p class="greeting">Hello <strong><%= name %></strong>,</p>
+        <p>We are happy to see you.</p>
+        <p>Please click on the below button to Verify you email.</p>
+        <a href="<%= url %>" target="_blank"> Click to verify </a>
+        <p>Feel free to explore and reach out if you need any assistance.</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Duel. All rights reserved.</p>
+    </footer>
+</body>
+</html>

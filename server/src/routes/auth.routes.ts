@@ -1,14 +1,15 @@
 import { Router, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { v4 as uuid4} from "uuid";
+import { ZodError } from "zod";
+import jwt  from "jsonwebtoken";
 
-import { registerSchema } from "../validation/authValidation";
+import { loginSchema, registerSchema } from "../validation/authValidation";
 import { formatError, renderEmailEjs } from "../helper";
 import { PrismaClient } from "@prisma/client";
 import { emailQueue, emailQueueName } from "../jobs/emailJobs";
 
 const router = Router();
-
 const prisma = new PrismaClient();
 
 // - Register route
@@ -33,11 +34,12 @@ router.post("/register", async ( req: Request, res: Response ) => {
                 email: email
             }
         })
-
         if(user) {
             return res.status(422).json({
                 message: "Failed",
-                errors: "Email already exists. Please try another one"
+                errors: {
+                    email: "Email already exists. Please try another one"
+                }
             })
         };
 
@@ -72,13 +74,102 @@ router.post("/register", async ( req: Request, res: Response ) => {
             data: newUser
         })
     } catch (error) {
-        console.log(error);
-        
+        if(error instanceof ZodError) {
+            const errors = formatError(error);
+            return res.status(422).json({
+                message: "Invalid Data",
+                errors
+            })
+        };
+
         return res.status(500).json({
             message: "Something went wrong",
             data: error
         })
     }
 });
+
+
+// - Log in route
+router.post("/login", async (req: Request, res: Response) => {
+    try {
+        const body = req.body;
+        const payload = loginSchema.safeParse(body);
+
+        if (!payload.success) {
+            return res.status(422).json({
+                message: "Validation failed",
+                errors: formatError(payload.error),
+            });
+        }
+
+        const { email, password } = payload.data;
+
+        // - Checking user with email:
+        let existingUser = await prisma.user.findUnique({
+            where: {
+                email: email 
+            }
+        });
+
+        if( !existingUser || existingUser === null ) {
+            return res.status(422).json({
+                errors: {
+                    email: "No user found with this email"
+                }
+            })
+        };
+
+        // - Verifying password:
+        const comparePassword = await bcrypt.compare( password, existingUser.password );
+
+        if( !comparePassword ) {
+            return res.status(422).json({
+                errors: {
+                    email: "Invalid Email of Password"
+                }
+            })
+        };
+
+
+        // - JWT payload
+        const jwtPayload = {
+            id: existingUser.id,
+            email: existingUser.email,
+            name: existingUser.name
+        };
+
+        // - Generating JWT token
+        const token = jwt.sign(jwtPayload, process.env.JWT_SECRET!, {
+            expiresIn: "10d"
+        });
+
+        // - Sending the response with JWT token
+        return res.status(200).json({
+            message: "login successful",
+            data: {
+                ...jwtPayload,
+                token: `Bearer ${token}`
+            }
+        })
+
+    } catch (error) {
+
+        if(error instanceof ZodError) {
+            const errors = formatError(error);
+            return res.status(422).json({
+                message: "Invalid Data",
+                errors
+            })
+        };
+
+        return res.status(500).json({
+            message: "Something went wrong",
+            data: error
+        });
+    }
+});
+
+// - Log out route
 
 export default router;

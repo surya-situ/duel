@@ -1,4 +1,5 @@
 import ejs from "ejs";
+import moment from "moment";
 import path from "path";
 import { ZodError } from "zod";
 
@@ -16,4 +17,13 @@ export const renderEmailEjs = async (fileName: string, payload: any): Promise<an
     const html = await ejs.renderFile(__dirname + `/views/emails/${fileName}.ejs`, payload);
 
     return html;
-}
+};
+
+export const checkDateMinutesDiff = ( date: Date | string ): number => {
+
+    const now = moment();
+    const tokenSendAt = moment(date);
+    const difference = moment.duration(now.diff(tokenSendAt));
+
+    return difference.asMinutes();
+};

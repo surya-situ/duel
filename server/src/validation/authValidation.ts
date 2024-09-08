@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// - Register schema
 export const registerSchema = z.object({
     email: z.string({ message: "Email is required." })
         .email({ message: "Invalid email address." }),
@@ -16,3 +17,11 @@ export const registerSchema = z.object({
     message: "Passwords do not match.",
     path: ["confirmPassword"]
 });
+
+
+// - Login schema
+export const loginSchema = z.object({
+    email: z.string({ message: "Email is required."})
+    .email({ message: "Invalid email address" }),
+    password: z.string({ message: "Password is required." })
+})

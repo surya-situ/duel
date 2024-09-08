@@ -8,12 +8,14 @@ import { loginSchema, registerSchema } from "../validation/authValidation";
 import { formatError, renderEmailEjs } from "../helper";
 import { PrismaClient } from "@prisma/client";
 import { emailQueue, emailQueueName } from "../jobs/emailJobs";
+import authMiddleware from "../middleware/authMiddleware";
+import { authLimiter } from "../config/rateLimit";
 
 const router = Router();
 const prisma = new PrismaClient();
 
 // - Register route
-router.post("/register", async ( req: Request, res: Response ) => {
+router.post("/register", authLimiter, async ( req: Request, res: Response ) => {
     const body = req.body;
     const payload = registerSchema.safeParse(body);
 
@@ -91,7 +93,7 @@ router.post("/register", async ( req: Request, res: Response ) => {
 
 
 // - Log in route
-router.post("/login", async (req: Request, res: Response) => {
+router.post("/login", authLimiter, async (req: Request, res: Response) => {
     try {
         const body = req.body;
         const payload = loginSchema.safeParse(body);
@@ -126,7 +128,7 @@ router.post("/login", async (req: Request, res: Response) => {
         if( !comparePassword ) {
             return res.status(422).json({
                 errors: {
-                    email: "Invalid Email of Password"
+                    email: "Invalid Email or Password"
                 }
             })
         };
@@ -169,6 +171,80 @@ router.post("/login", async (req: Request, res: Response) => {
         });
     }
 });
+
+// - Log in check route
+router.post("/check/credentials", authLimiter, async (req: Request, res: Response) => {
+    try {
+        const body = req.body;
+        const payload = loginSchema.safeParse(body);
+
+        if (!payload.success) {
+            return res.status(422).json({
+                message: "Validation failed",
+                errors: formatError(payload.error),
+            });
+        }
+
+        const { email, password } = payload.data;
+
+        // - Checking user with email:
+        let existingUser = await prisma.user.findUnique({
+            where: {
+                email: email 
+            }
+        });
+
+        if( !existingUser || existingUser === null ) {
+            return res.status(422).json({
+                errors: {
+                    email: "No user found with this email"
+                }
+            })
+        };
+
+        // - Verifying password:
+        const comparePassword = await bcrypt.compare( password, existingUser.password );
+
+        if( !comparePassword ) {
+            return res.status(422).json({
+                errors: {
+                    email: "Invalid Email or Password"
+                }
+            })
+        };
+
+        return res.status(200).json({
+            message: "login successful",
+            data: {}
+        })
+
+    } catch (error) {
+
+        if(error instanceof ZodError) {
+            const errors = formatError(error);
+            return res.status(422).json({
+                message: "Invalid Data",
+                errors
+            })
+        };
+
+        return res.status(500).json({
+            message: "Something went wrong",
+            data: error
+        });
+    }
+});
+
+
+// - Get user
+router.get("/user", authMiddleware, async ( req: Request, res: Response ) => {
+    const user = req.user;
+
+    return res.status(200).json({
+        data: user
+    })
+});
+
 
 // - Log out route
 

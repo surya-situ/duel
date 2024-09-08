@@ -38,4 +38,4 @@ router.get("/verify-error", async(req: Request, res: Response) => {
     res.render("../views/auth/emailVerifyerror.ejs");
 });
 
-export default router
+export default router;

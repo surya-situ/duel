@@ -1,7 +1,9 @@
 import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import path from "path";
 import ejs from "ejs";
+import fileUpload from "express-fileupload";
 
 import router from "./routes/index.js";
 import { emailQueue, emailQueueName } from "./jobs/emailJobs";
@@ -15,8 +17,14 @@ const PORT = process.env.PORT || 7000;
 
 // - Global middlewares
 app.use(express.json());
+app.use(cors())
 app.use(express.urlencoded({ extended: false }));
 app.use(appLimiter); // Rate limiter
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp'
+}));
+app.use(express.static("public"))
 
 // - View Engine
 app.set("view engine", "ejs")

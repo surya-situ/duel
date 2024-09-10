@@ -17,6 +17,7 @@ npm install
 ```
 
 - Do not forget to change .Env variable in both SERVER and FRONTEND before running 
+> This repo uses nodemailer, so to use it add your email in the ADMIN_EMAIL and same email security_key in the ADMIN_EMAIL_PASS to send email as admin 
 ```bash
 * SERVER
 PORT= 5000

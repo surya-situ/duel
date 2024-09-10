@@ -2,7 +2,7 @@
 
 First install all dependencies and run the development server:
 
--To install all dependencies
+- To install all dependencies
 ```bash
 npm install
 ```
@@ -17,7 +17,7 @@ NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=use your NEXTAUTH_SECRET 
 ```
 
--To run repo
+- To run repo
 ```bash
 npm run dev
 ```

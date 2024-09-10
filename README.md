@@ -16,6 +16,17 @@ npm install
 npm install
 ```
 
+## Do not forget to change .Env variable in both SERVER and FRONTEND before running 
+```bash
+-FRONTEND
+APP_URL=http://localhost:3000
+BACKEND_APP_URL=http://localhost:5000
+
+NEXTAUTH_URL=http://localhost:3000
+- Update NEXTAUTH_SECRET
+NEXTAUTH_SECRET=use your NEXTAUTH_SECRET 
+```
+
 ## Usage
 
 - To run the server 

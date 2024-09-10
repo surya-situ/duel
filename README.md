@@ -18,7 +18,17 @@ npm install
 
 ## Do not forget to change .Env variable in both SERVER and FRONTEND before running 
 ```bash
--FRONTEND
+* SERVER
+PORT= 5000
+DATABASE_URL=YOUR_DATABASE_URL
+ADMIN_EMAIL=YOUR_EMAIL
+ADMIN_EMAIL_PASS=YOUR_EMAIL_SECURITYKEY
+REDIS_HOST=localhost || if you are using any cloud service
+APP_URL=http://localhost:5000
+CLIENT_APP_URL=http://localhost:3000
+JWT_SECRET=use your jwt secret
+
+* FRONTEND
 APP_URL=http://localhost:3000
 BACKEND_APP_URL=http://localhost:5000
 

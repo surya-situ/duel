@@ -13,6 +13,6 @@ router.use("/api/auth", PasswordRoute); // - user password reset route
 router.use("/", VerifyRoute); // - user verify route
 
 // - duel router *Private routes
-router.use("/api/duel", authMiddleware, DuelRoute)
+router.use("/api/duel",  DuelRoute)
 
 export default router;

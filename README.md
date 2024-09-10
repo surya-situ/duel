@@ -16,7 +16,7 @@ npm install
 npm install
 ```
 
-## Do not forget to change .Env variable in both SERVER and FRONTEND before running 
+- Do not forget to change .Env variable in both SERVER and FRONTEND before running 
 ```bash
 * SERVER
 PORT= 5000

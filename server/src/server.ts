@@ -4,16 +4,30 @@ import cors from "cors";
 import path from "path";
 import ejs from "ejs";
 import fileUpload from "express-fileupload";
+import { Server } from "socket.io";
+import { createServer, Server as HttpServer } from "http";
 
 import router from "./routes/index.js";
 import { emailQueue, emailQueueName } from "./jobs/emailJobs";
 import "./jobs/index"
 import { appLimiter } from "./config/rateLimit.js";
+import { setupSocket } from "./socket.js";
 
 dotenv.config();
+const PORT = process.env.PORT || 7000;
 
 const app:Application = express();
-const PORT = process.env.PORT || 7000;
+
+// Socket.io
+const server:HttpServer = createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: process.env.CLIENT_APP_URL
+    }
+});
+
+export {io};
+setupSocket(io);
 
 // - Global middlewares
 app.use(express.json());
@@ -48,6 +62,6 @@ app.get('/email', async (req: Request, res: Response) => {
     });
 });
 
-app.listen(PORT, ()=> {
+server.listen(PORT, ()=> {
     console.log(`Server is running on the port ${PORT}`);
 });

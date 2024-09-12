@@ -1,4 +1,4 @@
-# duel
+# Duel
 <h1 align="center">Welcome to Duel 👋</h1>
 
 > Duel is a dynamic gaming platform that lets players engage in real-time battles. Compete against others, showcase your skills, and rise through the ranks in an exhilarating, fast-paced environment. Duel is designed for those who thrive on competition and crave the thrill of victory..# Duel

@@ -109,7 +109,26 @@ router.get("/:id", async ( req: Request, res: Response ) => {
         const duel = await prisma.duel.findUnique({
             where: {
                 id: id
-            }
+            },
+            include: {
+                DuelItem : {
+                    select: {
+                        image: true,
+                        id: true,
+                        count: true
+                    }
+                },
+                DuelComments: {
+                    select: {
+                        id: true,
+                        comment: true,
+                        created_at: true
+                    },
+                    orderBy: {
+                        id: "desc"
+                    }
+                },
+            },
         })
 
         return res.status(200).json({

@@ -40,15 +40,11 @@ NEXTAUTH_SECRET=use your NEXTAUTH_SECRET
 
 - To run this repo locally on your machine use Docker for both **Redis** and **PostgreSql**
 ```sh
-- Docker command for Redis
-docker pull redis:latest
-docker run -d --name redis-container -p 6379:6379 -p 8001:8001 redis:latest
-
-- Check the container id
-docker ps
-
-- Start the container
-docker start CONTAINER ID
+- Navigate to the root of the project:
+- Start the services:
+docker-compose up -d
+- Check the status of the containers:
+docker-compose ps
 ```
 
 ## Usage

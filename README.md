@@ -41,10 +41,12 @@ NEXTAUTH_SECRET=use your NEXTAUTH_SECRET
 - To run this repo locally on your machine use Docker for both **Redis** and **PostgreSql**
 ```sh
 - Navigate to the root of the project:
-- Start the services:
+# Start the services:
 docker-compose up -d
-- Check the status of the containers:
+# Check the status of the containers:
 docker-compose ps
+
+# Change the variables in the docker-compose.yml file
 ```
 
 ## Usage

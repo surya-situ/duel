@@ -63,7 +63,7 @@ npm run dev
 ## Run tests
 
 ```sh
-npm run test
+ k6 run load_test.js
 ```
 
 ## Author

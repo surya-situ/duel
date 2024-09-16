@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
+import { Toaster } from "@/components/ui/sonner"
 import { Inter as FontSans } from "next/font/google"
  
 import { cn } from "@/lib/utils"
@@ -25,7 +25,11 @@ export default function RootLayout({
       <body className={cn(
           "min-h-screen bg-slate-50 font-sans antialiased",
           fontSans.variable
-        )}>{children}</body>
+      )}>
+        {children}
+        {/* Toaster from shadcn */}
+        <Toaster richColors position="top-right"/>
+      </body>
     </html>
   );
 }

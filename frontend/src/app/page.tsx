@@ -1,16 +1,16 @@
 'use client'
 
+import { getServerSession } from "next-auth";
+
 import HeroSection from "@/components/base/HeroSection";
-import { Button } from "@/components/ui/button";
+import { authOptions } from "./api/auth/[...nextauth]/options";
 
-export default function Home() {
+export default async function Home() {
 
-  const Alert = () => {
-    alert('This is a alert notification');
-  }
+  const session = await getServerSession(authOptions)
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center">
+    <main>
       <HeroSection />
     </main>
   );

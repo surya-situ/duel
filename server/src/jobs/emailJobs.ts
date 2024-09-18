@@ -20,7 +20,6 @@ export const queueWorker = new Worker(emailQueueName, async (Job:Job) =>
     {
     const data = Job.data
     await sendEmail(data.to, data.subject, data.body)
-    console.log('The queue data is: ', data);
     
     },
     {
